@@ -1,0 +1,30 @@
+<p><%= link_to "Add Intern", sign_up_path if current_user.role == "admin"%></p>
+<% if @existing_chats_users %>
+  Existing Chats:
+  <ul>
+     <% @existing_chats_users.each do |other_user| %>
+      <% if other_user != current_user %>
+        <li>
+          <%= link_to(user_chats_path(current_user, :other_user => other_user.id), method: :post, :id => "chat_#{other_user.id}") do %>
+          <%= other_user.email %>
+          <% end %>
+          <%= "new" if @unread.include?(other_user.id) %>
+        </li>
+       <% end %>
+     <% end %>
+</ul>
+<% end %>
+All Users:
+<ul>
+  <% User.all.each do |other_user| %>
+   <% if other_user != current_user %>
+     <li>
+       <%= link_to(user_chats_path(current_user, :other_user => other_user.id), method: :post) do %>
+        <%= other_user.email %>
+       <% end %>
+     </li>
+    <% end %>
+  <% end %>
+</ul>
+
+<script language="javascript" type="text/javascript">setTimeout("location.reload();",10000);</script>

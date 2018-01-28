@@ -1,0 +1,35 @@
+<div>
+  <h5>Chat with <%= @other_user.email %></h5>
+  <% if @chat.messages.any? %>
+    <div id="messages">
+      <%= render partial: 'messages/message', collection: @chat.messages.order(id: :asc)%>
+    </div>
+  <%else%>
+    <div id="messages">
+    </div>
+  <%end%>
+</div>
+<%= render partial: 'messages/message_form', locals: {message: @message, chat: @chat}%>
+</div>
+<%= link_to "Back", root_path%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  createMessageChannel();
+  // app/assets/javascripts/channels/messages.js 
+  messageForm();
+  // app/assets/javascripts/messages_form.js
+</script>
+<style type="text/css">
+
+  #messages {
+    width: 50%;
+    max-height: 500px;
+    overflow: scroll
+  }
+
+  textarea{
+    width: 46%;
+    margin: 15px;
+    height: 50px;
+  }
+</style>

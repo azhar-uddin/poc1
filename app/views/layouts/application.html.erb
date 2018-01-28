@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Interns</title>
+		<%= csrf_meta_tags %>
+		<%= action_cable_meta_tag %>
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+	</head>
+
+	<body>
+		<div id="user_nav">
+			<% if current_user %>
+				<%= link_to "Home", root_path %>
+				Logged in as <%= current_user.email %>.
+				<%= link_to "Log out", log_out_path %>
+				<%= link_to "Change Password", new_password_user_path(current_user) %>
+			<% else %>
+				<%= link_to "log in", log_in_path %>
+			<% end %>
+		</div>
+
+
+		<% flash.each do |name, msg| %>
+			<%= content_tag :div, msg, :id => "flash_#{name}" %>
+		<% end %>
+
+		<%= yield %>
+	</body>
+	<script>
+		var objDiv = document.getElementById("messages");
+		if(objDiv) {
+			objDiv.scrollTop = objDiv.scrollHeight;
+		}
+	</script>
+</html>
